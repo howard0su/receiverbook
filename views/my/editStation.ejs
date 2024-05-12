@@ -14,12 +14,15 @@
                 <% }) %>
             <% } else { %>
                 <li>
-                    There's currently no receivers in this station. You can add receivers using the dropdown below:
+                    There's currently no receivers in this station.
+                    <% if (unassignedReceivers.length) { %>
+                        You can add receivers using the dropdown below:
+                    <% } %>
                 </li>
             <% } %>
             <li>
                 <form class="row" method="POST" action="/my/stations/<%= station.id %>/assignReceiver">
-                    <select class="form-control col-9" name="receiver_id" id="receiver_id">
+                    <select class="form-control col-9" name="receiver_id" id="receiver_id" required>
                         <% unassignedReceivers.forEach(receiver => { %>
                             <option value="<%= receiver.id %>"><%= receiver.label %></option>
                         <% }) %>
@@ -28,6 +31,9 @@
                         <button type="submit" class="btn btn-primary">Add to station</button>
                     </div>
                 </form>
+                <% if (!unassignedReceivers.length) { %>
+                    You have no currently unassigned receivers. Please add new receivers and complete the claim process or remove them from other stations in order to add more receivers to this station.
+                <% } %>
             </li>
         </ul>
     </div>
