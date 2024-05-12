@@ -40,6 +40,8 @@ class StationController {
             Receiver.findOne({claims: {$elemMatch: {owner: req.user, status: 'verified'}}, _id:req.body.receiver_id}),
             Station.findOne({owner: req.user, _id:req.params.id})
         ]);
+        if (!receiver) return res.status(404).send('receiver not found');
+        if (!station) return res.status(404).send('station not found');
 
         receiver.station = station;
         await receiver.save();
@@ -47,6 +49,8 @@ class StationController {
     }
     async removeReceiver(req, res) {
         const receiver = await Receiver.findOne({claims: {$elemMatch: {owner: req.user, status: 'verified'}}, _id:req.params.receiver_id})
+        if (!receiver) return res.status(404).send('receiver not found');
+
         receiver.station = null;
         await receiver.save();
         res.redirect(`/my/stations/${req.params.id}`)
