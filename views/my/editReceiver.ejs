@@ -107,7 +107,7 @@ receiver_keys += ["<%= claim.key %>"]
                 We will poll your receiver in regular intervals. Please allow a few hours to pass before your claim
                 will become verified.
             </p>
-        <% } else if (receiver.type === 'kiwisdr') { %>
+        <% } else if (receiver.type === 'kiwisdr' || receiver.type === 'web888') { %>
             <ul>
                 <li>
                     <h4>E-Mail validation</h4>
